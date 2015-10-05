@@ -9,4 +9,33 @@ Description   A web application for reporting information about comics
 License       GPL version 2 (see GPL.txt for details)
 """
 
+import configparser
+import bottle
+import sys
+
 __author__ = 'enrico'
+
+app = application = bottle.Bottle()
+
+
+def load_cfg():
+    cfg = configparser.ConfigParser()
+    try:
+        cfg.read(sys.argv[1])
+    except:
+        print("Usage: " + sys.argv[0] + " <configfile>")
+        sys.exit(1)
+
+    return cfg
+
+@app.route("/")
+def index():
+    return "Hello World!"
+
+if __name__ == "__main__":
+    cfg = load_cfg()
+
+    bottle.run(app=app,
+               host=cfg["service"]["listen"],
+               port=int(cfg["service"]["port"]),
+               debug=cfg["service"].getboolean("debug"))
