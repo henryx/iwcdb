@@ -30,7 +30,7 @@ def load_cfg():
 
 @app.route("/")
 def index():
-    return "Hello World!"
+    return bottle.template("index", title="the Italian Web Comics Database")
 
 if __name__ == "__main__":
     cfg = load_cfg()
