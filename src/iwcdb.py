@@ -28,6 +28,14 @@ def load_cfg():
 
     return cfg
 
+@app.route("/albi", method="GET")
+def albi():
+    pass
+
+@app.route("/albi/add", method="POST")
+def albi():
+    pass
+
 @app.route("/")
 def index():
     return bottle.template("index", title="the Italian Web Comics Database")
@@ -38,4 +46,5 @@ if __name__ == "__main__":
     bottle.run(app=app,
                host=cfg["service"]["listen"],
                port=int(cfg["service"]["port"]),
-               debug=cfg["service"].getboolean("debug"))
+               debug=cfg["service"].getboolean("debug"),
+               reloader=True)
