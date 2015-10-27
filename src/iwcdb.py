@@ -37,12 +37,12 @@ def strip_path():
 
 @app.route("/albi", method="GET")
 def albi():
-    pass
+    bottle.response.headers['Content-type'] = 'application/json'
 
 
 @app.route("/albi/add", method="POST")
 def albi():
-    pass
+    bottle.response.headers['Content-type'] = 'application/json'
 
 
 @app.route("/")
