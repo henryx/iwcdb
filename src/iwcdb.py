@@ -29,6 +29,12 @@ def load_cfg():
     return cfg
 
 
+@app.hook('before_request')
+def strip_path():
+    bottle.request.environ['PATH_INFO'] = bottle.request.environ[
+        'PATH_INFO'].rstrip('/')
+
+
 @app.route("/albi", method="GET")
 def albi():
     pass
