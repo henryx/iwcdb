@@ -38,6 +38,7 @@ def strip_path():
 @app.route("/albi", method="GET")
 def albi():
     bottle.response.headers['Content-type'] = 'application/json'
+    serie = bottle.request.query.serie or None
 
 
 @app.route("/albi/add", method="POST")
