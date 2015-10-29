@@ -47,7 +47,7 @@ def albi():
     serie = bottle.request.query.serie or None
 
 
-@app.route("/albi/add", method="POST")
+@app.route("/albi/add", method="PUT")
 def albi():
     bottle.response.headers['Content-type'] = 'application/json'
 
