@@ -51,6 +51,19 @@ def albi():
 def albi():
     bottle.response.headers['Content-type'] = 'application/json'
 
+    data = bottle.request.body.readline()
+
+    if not data:
+        raise bottle.HTTPError(status=500, body='No data received')
+
+    entity = json.loads(data)
+    if "_id" not in entity:
+        raise bottle.HTTPError(status=500, body='No _id specified')
+    try:
+        print(data)  # TODO: validate and save data
+    except Exception as ve:
+        raise bottle.HTTPError(status=500, body=str(ve))
+
 
 @app.route("/")
 def index():
