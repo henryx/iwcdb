@@ -10,6 +10,7 @@ License       GPL version 2 (see GPL.txt for details)
 """
 
 import configparser
+import json
 import bottle
 import sys
 
@@ -33,6 +34,11 @@ def load_cfg():
 def strip_path():
     bottle.request.environ['PATH_INFO'] = bottle.request.environ[
         'PATH_INFO'].rstrip('/')
+
+
+@app.error(500)
+def error500(error):
+    return json.dumps({"result": "ko", "message": error.body})
 
 
 @app.route("/albi", method="GET")
