@@ -65,6 +65,8 @@ def albi():
     except Exception as ve:
         raise bottle.HTTPError(status=500, body=str(ve))
 
+    return json.dumps({"result": "ok"})
+
 
 @app.route("/")
 def index():
