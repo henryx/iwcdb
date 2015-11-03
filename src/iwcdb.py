@@ -10,6 +10,7 @@ License       GPL version 2 (see GPL.txt for details)
 """
 
 import configparser
+import io
 import json
 import bottle
 import sys
@@ -51,7 +52,7 @@ def albi():
 def albi():
     bottle.response.headers['Content-type'] = 'application/json'
 
-    data = bottle.request.body.readline()
+    data = io.TextIOWrapper(bottle.request.body)
 
     if not data:
         raise bottle.HTTPError(status=500, body='No data received')
