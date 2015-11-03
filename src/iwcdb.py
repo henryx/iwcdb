@@ -52,19 +52,19 @@ def albi():
 def albi():
     bottle.response.headers['Content-type'] = 'application/json'
 
-    data = io.TextIOWrapper(bottle.request.body)
-
-    if not data:
+    if bottle.request.body == "":
         raise bottle.HTTPError(status=500, body='No data received')
 
-    entity = json.loads(data)
-    if "_id" not in entity:
-        raise bottle.HTTPError(status=500, body='No _id specified')
     try:
-        print(data)  # TODO: validate and save data
+        data = io.TextIOWrapper(bottle.request.body)
+        entity = json.load(data)
     except Exception as ve:
         raise bottle.HTTPError(status=500, body=str(ve))
 
+    if "_id" not in entity:
+        raise bottle.HTTPError(status=500, body='No _id specified')
+
+    print(entity)  # TODO: validate and save data
     return json.dumps({"result": "ok"})
 
 
