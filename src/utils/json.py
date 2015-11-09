@@ -13,25 +13,23 @@ __author__ = 'enrico'
 
 
 def validate_albi(data):
-    if "id" not in data:
-        raise ValueError("id is missing in JSON")
+    fields = [
+        "id",
+        "serie",
+        "numero",
+        "uscita",
+        "prezzo"
+    ]
 
-    if "serie" not in data:
-        raise ValueError("serie is missing in JSON")
+    for field in fields:
+        if field not in data:
+            raise ValueError(field + " is missing in JSON")
 
-    if "numero" not in data:
-        raise ValueError("numero is missing in JSON")
+    try:
+        datetime.datetime.strptime(data["uscita"], '%Y-%m-%d')
+    except:
+        raise ValueError("Malformed date in JSON uscita field")
 
-    if "uscita" not in data:
-        raise ValueError("uscita is missing in JSON")
-    else:
-        try:
-            datetime.datetime.strptime(data["uscita"], '%Y-%m-%d')
-        except:
-            raise ValueError("Malformed date in JSON uscita field")
-
-    if "prezzo" not in data:
-        raise ValueError("prezzo is missing in JSON")
 
     # TODO: check valuta
 
