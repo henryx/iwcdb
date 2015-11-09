@@ -15,6 +15,8 @@ import json
 import bottle
 import sys
 
+import utils.json
+
 __author__ = 'enrico'
 
 app = application = bottle.Bottle()
@@ -61,11 +63,11 @@ def albi():
     except Exception as e:
         raise bottle.HTTPError(status=500, body=str("Malformed JSON"))
 
-    if "_id" not in entity:
-        raise bottle.HTTPError(status=500, body='No _id specified')
-
-    print(entity)  # TODO: validate and save data
-    return json.dumps({"result": "ok"})
+    try:
+        if utils.json.validate_albi(entity):
+            return json.dumps({"result": "ok"})
+    except Exception as e:
+        raise bottle.HTTPError(status=500, body=str(e))
 
 
 @app.route("/")
