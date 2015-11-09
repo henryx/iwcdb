@@ -10,4 +10,4 @@ License       GPL version 2 (see GPL.txt for details)
 
 __author__ = 'enrico'
 
-__all__ = ["database"]
+__all__ = ["database", "json"]
