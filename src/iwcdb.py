@@ -58,8 +58,8 @@ def albi():
     try:
         data = io.TextIOWrapper(bottle.request.body)
         entity = json.load(data)
-    except Exception as ve:
-        raise bottle.HTTPError(status=500, body=str(ve))
+    except Exception as e:
+        raise bottle.HTTPError(status=500, body=str("Malformed JSON"))
 
     if "_id" not in entity:
         raise bottle.HTTPError(status=500, body='No _id specified')
