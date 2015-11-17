@@ -16,6 +16,7 @@ import bottle
 import sys
 
 import utils.json
+from utils import database
 
 __author__ = 'enrico'
 
@@ -65,6 +66,7 @@ def albi():
 
     try:
         if utils.json.validate_albi(entity):
+            database.add_albi(load_cfg(), entity)
             return json.dumps({"result": "ok"})
     except Exception as e:
         raise bottle.HTTPError(status=500, body=str(e))

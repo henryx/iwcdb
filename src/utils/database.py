@@ -16,20 +16,20 @@ class Database:
     _connection = None
 
     def __init__(self, cfg):
-        self._conn = psycopg2.connect(host=cfg["database"]["host"],
-                                      port=cfg["database"]["port"],
-                                      database=cfg["database"]["database"],
-                                      user=cfg["database"]["user"],
-                                      password=cfg["database"]["password"])
+        self._connection = psycopg2.connect(host=cfg["database"]["host"],
+                                            port=cfg["database"]["port"],
+                                            database=cfg["database"]["database"],
+                                            user=cfg["database"]["user"],
+                                            password=cfg["database"]["password"])
 
     def __enter__(self):
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb):
         try:
-            if self._conn:
-                self._conn.commit()
-                self._conn.close()
+            if self._connection:
+                self._connection.commit()
+                self._connection.close()
         except:
             pass
 
