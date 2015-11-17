@@ -14,7 +14,6 @@ __author__ = 'enrico'
 
 def validate_albi(data):
     fields = [
-        "id",
         "serie",
         "numero",
         "uscita",
