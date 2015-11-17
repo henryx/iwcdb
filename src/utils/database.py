@@ -7,6 +7,8 @@ Description   A web application for reporting information about comics
               published in Italy
 License       GPL version 2 (see GPL.txt for details)
 """
+from contextlib import closing
+
 import psycopg2
 
 __author__ = 'enrico'
@@ -36,3 +38,18 @@ class Database:
     @property
     def connection(self):
         return self._connection
+
+
+def add_albi(cfg, data) -> bool:
+    # TODO: add valuta
+    # TODO: check if serie is already inserted
+
+    insert = " ".join(["INSERT INTO ft_albo(numero_albo,",
+                       "nome_serie, data_uscita, prezzo)",
+                       "VALUES(%(numero)s, %(serie)s, %(uscita)s, %(prezzo)s)"])
+
+    with Database(cfg) as db:
+        with closing(db.connection.cursor()) as cursor:
+            cursor.execute(insert, data)
+
+    return True
