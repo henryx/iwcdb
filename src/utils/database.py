@@ -8,7 +8,6 @@ Description   A web application for reporting information about comics
 License       GPL version 2 (see GPL.txt for details)
 """
 from contextlib import closing
-
 import psycopg2
 
 __author__ = 'enrico'
@@ -40,16 +39,33 @@ class Database:
         return self._connection
 
 
-def add_albi(cfg, data) -> bool:
+def is_serie_exist(cfg, nome_serie) -> bool:
+    query = "SELECT Count(*) FROM lk_serie WHERE nome_serie = %s"
+
+    with Database(cfg) as db:
+        with closing(db.connection.cursor()) as cursor:
+            cursor.execute(query, (nome_serie,))
+
+            value = cursor.fetchone()[0]
+
+            if value > 0:
+                return True
+            else:
+                return False
+
+
+def add_albi(cfg, data) -> dict:
     # TODO: add valuta
-    # TODO: check if serie is already inserted
 
     insert = " ".join(["INSERT INTO ft_albo(numero_albo,",
                        "nome_serie, data_uscita, prezzo)",
                        "VALUES(%(numero)s, %(serie)s, %(uscita)s, %(prezzo)s)"])
 
-    with Database(cfg) as db:
-        with closing(db.connection.cursor()) as cursor:
-            cursor.execute(insert, data)
+    if is_serie_exist(cfg, data["serie"]):
+        with Database(cfg) as db:
+            with closing(db.connection.cursor()) as cursor:
+                cursor.execute(insert, data)
 
-    return True
+        return {"result": "ok", "message": "albo inserted"}
+    else:
+        return {"result": "ko", "message": "serie does not exist"}
