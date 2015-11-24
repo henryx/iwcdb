@@ -66,8 +66,11 @@ def albi():
 
     try:
         if utils.json.validate_albi(entity):
-            database.add_albi(load_cfg(), entity)
-            return json.dumps({"result": "ok"})
+            result = database.add_albi(load_cfg(), entity)
+            if result["result"] == "ok":
+                return json.dumps(result)
+            else:
+                raise Exception(result["message"])
     except Exception as e:
         raise bottle.HTTPError(status=500, body=str(e))
 
