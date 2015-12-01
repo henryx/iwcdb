@@ -7,6 +7,7 @@ Description   A web application for reporting information about comics
               published in Italy
 License       GPL version 2 (see GPL.txt for details)
 """
+from configparser import ConfigParser
 from contextlib import closing
 import psycopg2
 
@@ -39,7 +40,7 @@ class Database:
         return self._connection
 
 
-def is_serie_exist(cfg, nome_serie) -> bool:
+def is_serie_exist(cfg: ConfigParser, nome_serie: str) -> bool:
     query = "SELECT Count(*) FROM lk_serie WHERE nome_serie = %s"
 
     with Database(cfg) as db:
@@ -54,7 +55,7 @@ def is_serie_exist(cfg, nome_serie) -> bool:
                 return False
 
 
-def add_albi(cfg, data) -> dict:
+def add_albi(cfg: ConfigParser, data: dict) -> dict:
     # TODO: add valuta
 
     insert = " ".join(["INSERT INTO ft_albo(numero_albo,",

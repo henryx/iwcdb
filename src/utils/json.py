@@ -12,7 +12,8 @@ import datetime
 __author__ = 'enrico'
 
 
-def validate_albi(data):
+def validate_albi(data: dict) -> bool:
+    # TODO: check valuta
     fields = [
         "serie",
         "numero",
@@ -28,8 +29,5 @@ def validate_albi(data):
         datetime.datetime.strptime(data["uscita"], '%Y-%m-%d')
     except:
         raise ValueError("Malformed date in JSON uscita field")
-
-
-    # TODO: check valuta
 
     return True
