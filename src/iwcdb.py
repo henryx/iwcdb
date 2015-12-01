@@ -80,6 +80,21 @@ def albi():
         raise bottle.HTTPError(status=500, body=str(e))
 
 
+@app.route("/serie", method="GET")
+def serie():
+    bottle.response.headers['Content-type'] = 'application/json'
+    serie = bottle.request.query.serie or None
+    # TODO: return serie JSON
+
+
+@app.route("/serie/add", method="PUT")
+def serie():
+    bottle.response.headers['Content-type'] = 'application/json'
+
+    entity = read_json()
+    # TODO: insert serie into database
+
+
 @app.route("/")
 def index():
     return bottle.template("index", title="the Italian Web Comics Database")
