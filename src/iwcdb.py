@@ -14,7 +14,6 @@ import io
 import json
 import bottle
 import sys
-
 import utils.json
 from utils import database
 
@@ -34,6 +33,19 @@ def load_cfg():
     return cfg
 
 
+def read_json() -> dict:
+    if bottle.request.body == "":
+        raise bottle.HTTPError(status=500, body='No data received')
+
+    try:
+        data = io.TextIOWrapper(bottle.request.body)
+        entity = json.load(data)
+    except Exception as e:
+        raise bottle.HTTPError(status=500, body=str("Malformed JSON"))
+
+    return entity
+
+
 @app.hook('before_request')
 def strip_path():
     bottle.request.environ['PATH_INFO'] = bottle.request.environ[
@@ -49,21 +61,14 @@ def error500(error):
 def albi():
     bottle.response.headers['Content-type'] = 'application/json'
     serie = bottle.request.query.serie or None
+    # TODO: return albi JSON
 
 
 @app.route("/albi/add", method="PUT")
 def albi():
     bottle.response.headers['Content-type'] = 'application/json'
 
-    if bottle.request.body == "":
-        raise bottle.HTTPError(status=500, body='No data received')
-
-    try:
-        data = io.TextIOWrapper(bottle.request.body)
-        entity = json.load(data)
-    except Exception as e:
-        raise bottle.HTTPError(status=500, body=str("Malformed JSON"))
-
+    entity = read_json()
     try:
         if utils.json.validate_albi(entity):
             result = database.add_albi(load_cfg(), entity)
