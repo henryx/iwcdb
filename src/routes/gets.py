@@ -16,5 +16,5 @@ def index():
 
 def serie():
     bottle.response.headers['Content-type'] = 'application/json'
-    serie = bottle.request.query.serie or None
-    # TODO: return serie JSON
+    req = bottle.request.query.serie or None
+
