@@ -21,4 +21,5 @@ def serie():
     req = bottle.request.query.serie or None
 
     if not req:
+        bottle.response.status = 500
         return json.dumps({"result": "ko", "message": "no serie passed"})
