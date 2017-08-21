@@ -16,7 +16,7 @@ import sys
 
 __author__ = 'enrico'
 
-__all__ = ["database", "json"]
+__all__ = ["database", "validators"]
 
 
 def read_json() -> dict:
