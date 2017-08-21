@@ -14,12 +14,6 @@ def index():
     return bottle.template("index", title="the Italian Web Comics Database")
 
 
-def albi():
-    bottle.response.headers['Content-type'] = 'application/json'
-    serie = bottle.request.query.serie or None
-    # TODO: return albi JSON
-
-
 def serie():
     bottle.response.headers['Content-type'] = 'application/json'
     serie = bottle.request.query.serie or None

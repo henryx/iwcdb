@@ -35,7 +35,6 @@ if __name__ == "__main__":
     cfg = utils.load_cfg()
 
     app.route("/", method="GET", callback=gets.index)
-    app.route("/albi", method="GET", callback=gets.albi)
     app.route("/serie", method="GET", callback=gets.serie)
 
     app.route("/serie/add", method="PUT", callback=puts.serie)
