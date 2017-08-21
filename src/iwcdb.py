@@ -13,8 +13,8 @@ import json
 
 import bottle
 
+import utils
 from routes import gets, puts
-import utils.json
 
 __author__ = 'enrico'
 
