@@ -11,7 +11,9 @@ import json
 
 import bottle
 
-import utils.json
+import utils
+import utils.database
+import utils.validators
 
 
 def albi():
@@ -19,7 +21,7 @@ def albi():
 
     entity = utils.read_json()
     try:
-        if utils.json.validate_albi(entity):
+        if utils.validators.validate_albi(entity):
             result = utils.database.add_albi(utils.load_cfg(), entity)
             if result["result"] == "ok":
                 return json.dumps(result)
