@@ -14,6 +14,8 @@ import json
 import bottle
 import sys
 
+from . import database, validators
+
 __author__ = 'enrico'
 
 __all__ = ["database", "validators"]
