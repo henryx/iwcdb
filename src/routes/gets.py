@@ -7,6 +7,8 @@ Description   A web application for reporting information about comics
               published in Italy
 License       GPL version 2 (see GPL.txt for details)
 """
+import json
+
 import bottle
 
 
@@ -18,3 +20,5 @@ def serie():
     bottle.response.headers['Content-type'] = 'application/json'
     req = bottle.request.query.serie or None
 
+    if not req:
+        return json.dumps({"result": "ko", "message": "no serie passed"})
