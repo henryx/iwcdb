@@ -33,9 +33,10 @@ def error500(error):
 
 if __name__ == "__main__":
     cfg = utils.load_cfg()
+    g = gets.Gets()
 
-    app.route("/", method="GET", callback=gets.index)
-    app.route("/serie", method="GET", callback=gets.serie)
+    app.route("/", method="GET", callback=g.index)
+    app.route("/serie", method="GET", callback=g.serie)
 
     app.route("/serie/add", method="PUT", callback=puts.serie)
     app.route("/albi/add", method="PUT", callback=puts.albi)

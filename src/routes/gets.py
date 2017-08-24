@@ -12,14 +12,14 @@ import json
 import bottle
 
 
-def index():
-    return bottle.template("index", title="the Italian Web Comics Database")
+class Gets:
+    def index(self):
+        return bottle.template("index", title="the Italian Web Comics Database")
 
+    def serie(self):
+        bottle.response.headers['Content-type'] = 'application/json'
+        req = bottle.request.query.name or None
 
-def serie():
-    bottle.response.headers['Content-type'] = 'application/json'
-    req = bottle.request.query.name or None
-
-    if not req:
-        bottle.response.status = 500
-        return json.dumps({"result": "ko", "message": "no serie passed"})
+        if not req:
+            bottle.response.status = 500
+            return json.dumps({"result": "ko", "message": "no serie passed"})
