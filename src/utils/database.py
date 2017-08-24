@@ -10,7 +10,7 @@ License       GPL version 2 (see LICENSE for details)
 
 from configparser import ConfigParser
 from contextlib import closing
-import psycopg2
+import MySQLdb
 
 __author__ = 'enrico'
 
@@ -18,12 +18,12 @@ __author__ = 'enrico'
 class Database:
     _connection = None
 
-    def __init__(self, cfg):
-        self._connection = psycopg2.connect(host=cfg["database"]["host"],
-                                            port=cfg["database"]["port"],
-                                            database=cfg["database"]["database"],
-                                            user=cfg["database"]["user"],
-                                            password=cfg["database"]["password"])
+    def __init__(self, cfg: ConfigParser):
+        self._connection = MySQLdb.connect(host=cfg["database"]["host"],
+                                           port=cfg.getint("database", "port"),
+                                           database=cfg["database"]["database"],
+                                           user=cfg["database"]["user"],
+                                           password=cfg["database"]["password"])
 
     def __enter__(self):
         return self
