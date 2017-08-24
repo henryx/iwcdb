@@ -18,7 +18,7 @@ def index():
 
 def serie():
     bottle.response.headers['Content-type'] = 'application/json'
-    req = bottle.request.query.serie or None
+    req = bottle.request.query.name or None
 
     if not req:
         bottle.response.status = 500
