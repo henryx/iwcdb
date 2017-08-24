@@ -9,7 +9,7 @@ License       GPL version 2 (see LICENSE for details)
 """
 
 import unittest
-import src.utils.json
+import src.utils.validators
 
 
 class TestJson(unittest.TestCase):

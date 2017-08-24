@@ -8,4 +8,4 @@ Description   A web application for reporting information about comics
 License       GPL version 2 (see LICENSE for details)
 """
 
-__all__ = ["test_json"]
+__all__ = ["test_database", "test_validators"]
