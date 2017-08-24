@@ -8,11 +8,21 @@ Description   A web application for reporting information about comics
 License       GPL version 2 (see GPL.txt for details)
 """
 import json
+from configparser import ConfigParser
 
 import bottle
 
 
 class Gets:
+    _cfg = None
+
+    @property
+    def cfg(self):
+        return self._cfg
+
+    def __init__(self, cfg: ConfigParser):
+        self._cfg = cfg
+
     def index(self):
         return bottle.template("index", title="the Italian Web Comics Database")
 

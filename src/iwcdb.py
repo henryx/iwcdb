@@ -33,7 +33,7 @@ def error500(error):
 
 if __name__ == "__main__":
     cfg = utils.load_cfg()
-    g = gets.Gets()
+    g = gets.Gets(cfg)
 
     app.route("/", method="GET", callback=g.index)
     app.route("/serie", method="GET", callback=g.serie)
