@@ -12,6 +12,8 @@ from configparser import ConfigParser
 
 import bottle
 
+from utils import database
+
 
 class Gets:
     _cfg = None
@@ -33,3 +35,8 @@ class Gets:
         if not req:
             bottle.response.status = 500
             return json.dumps({"result": "ko", "message": "no serie passed"})
+
+        res = database.is_serie_exist(self.cfg, req)
+
+        if res:
+            pass
