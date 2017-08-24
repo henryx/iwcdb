@@ -11,6 +11,7 @@ import json
 from configparser import ConfigParser
 
 import bottle
+import _mysql_exceptions
 
 from utils import database
 
@@ -36,7 +37,13 @@ class Gets:
             bottle.response.status = 500
             return json.dumps({"result": "ko", "message": "no serie passed"})
 
-        res = database.is_serie_exist(self.cfg, req)
+        try:
+            res = database.is_serie_exist(self.cfg, req)
 
-        if res:
-            pass
+            if res:
+                pass
+        except _mysql_exceptions.OperationalError as e:
+            print(dir(e))
+            bottle.response.status = 500
+            return json.dumps({"result": "ko", "message": "Cannot connect to database"})
+
