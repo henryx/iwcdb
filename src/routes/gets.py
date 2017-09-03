@@ -42,6 +42,10 @@ class Gets:
             if res:
                 # TODO: return serie JSON
                 pass
+            else:
+                bottle.response.status = 500
+                return json.dumps({"result": "ko", "message": "Serie {} not exist".format(req)})
         except _mysql_exceptions.OperationalError as e:
             bottle.response.status = 500
-            return "Cannot connect to database"
+            return json.dumps({"result": "ko", "message": "Cannot connect to database"})
+
