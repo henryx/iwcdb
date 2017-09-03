@@ -9,8 +9,6 @@ Description   A web application for reporting information about comics
 License       GPL version 2 (see LICENSE for details)
 """
 
-import json
-
 import bottle
 
 import utils
@@ -24,11 +22,6 @@ app = application = bottle.Bottle()
 @app.hook('before_request')
 def strip_path():
     bottle.request.environ['PATH_INFO'] = bottle.request.environ['PATH_INFO'].rstrip('/')
-
-
-@app.error(500)
-def error500(error):
-    return json.dumps({"result": "ko", "message": error.body})
 
 
 if __name__ == "__main__":
