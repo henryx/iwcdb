@@ -37,7 +37,7 @@ class Gets:
             return json.dumps({"result": "ko", "message": "no serie passed"})
 
         try:
-            res = database.is_serie_exist(self.cfg, req)
+            res = database.is_serie_exist(self.db, req)
 
             if res:
                 # TODO: return serie JSON
