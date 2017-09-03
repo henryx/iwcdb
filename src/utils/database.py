@@ -41,32 +41,30 @@ class Database:
         return self._connection
 
 
-def is_serie_exist(cfg: ConfigParser, nome_serie: str) -> bool:
+def is_serie_exist(db: Database, nome_serie: str) -> bool:
     query = "SELECT Count(*) FROM lk_serie WHERE nome_serie = %s"
 
-    with Database(cfg) as db:
-        with closing(db.connection.cursor()) as cursor:
-            cursor.execute(query, (nome_serie,))
+    with closing(db.connection.cursor()) as cursor:
+        cursor.execute(query, (nome_serie,))
 
-            value = cursor.fetchone()[0]
+        value = cursor.fetchone()[0]
 
-            if value > 0:
-                return True
-            else:
-                return False
+        if value > 0:
+            return True
+        else:
+            return False
 
 
-def add_albi(cfg: ConfigParser, data: dict) -> dict:
+def add_albi(db: Database, data: dict) -> dict:
     # TODO: add valuta
 
     insert = " ".join(["INSERT INTO ft_albo(numero_albo,",
                        "nome_serie, data_uscita, prezzo)",
                        "VALUES(%(numero)s, %(serie)s, %(uscita)s, %(prezzo)s)"])
 
-    if is_serie_exist(cfg, data["serie"]):
-        with Database(cfg) as db:
-            with closing(db.connection.cursor()) as cursor:
-                cursor.execute(insert, data)
+    if is_serie_exist(db, data["serie"]):
+        with closing(db.connection.cursor()) as cursor:
+            cursor.execute(insert, data)
 
         return {"result": "ok", "message": "albo inserted"}
     else:
