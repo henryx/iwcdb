@@ -33,16 +33,18 @@ def error500(error):
 
 if __name__ == "__main__":
     cfg = utils.load_cfg()
-    g = gets.Gets(cfg)
 
-    app.route("/", method="GET", callback=g.index)
-    app.route("/serie", method="GET", callback=g.serie)
+    with utils.database.Database(cfg) as db:
+        g = gets.Gets(db)
 
-    app.route("/serie/add", method="PUT", callback=puts.serie)
-    app.route("/albi/add", method="PUT", callback=puts.albi)
+        app.route("/", method="GET", callback=g.index)
+        app.route("/serie", method="GET", callback=g.serie)
 
-    bottle.run(app=app,
-               host=cfg["service"]["listen"],
-               port=int(cfg["service"]["port"]),
-               debug=cfg["service"].getboolean("debug"),
-               reloader=True)
+        app.route("/serie/add", method="PUT", callback=puts.serie)
+        app.route("/albi/add", method="PUT", callback=puts.albi)
+
+        bottle.run(app=app,
+                   host=cfg["service"]["listen"],
+                   port=int(cfg["service"]["port"]),
+                   debug=cfg["service"].getboolean("debug"),
+                   reloader=True)
