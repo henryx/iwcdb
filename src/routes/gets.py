@@ -8,23 +8,22 @@ Description   A web application for reporting information about comics
 License       GPL version 2 (see GPL.txt for details)
 """
 import json
-from configparser import ConfigParser
 
-import bottle
 import _mysql_exceptions
+import bottle
 
 from utils import database
 
 
 class Gets:
-    _cfg = None
+    _db = None
 
     @property
-    def cfg(self):
-        return self._cfg
+    def db(self):
+        return self._db
 
-    def __init__(self, cfg: ConfigParser):
-        self._cfg = cfg
+    def __init__(self, db: database.Database):
+        self._db = db
 
     def index(self):
         return bottle.template("index", title="the Italian Web Comics Database")
@@ -41,9 +40,8 @@ class Gets:
             res = database.is_serie_exist(self.cfg, req)
 
             if res:
+                # TODO: return serie JSON
                 pass
         except _mysql_exceptions.OperationalError as e:
-            print(dir(e))
             bottle.response.status = 500
-            return json.dumps({"result": "ko", "message": "Cannot connect to database"})
-
+            return "Cannot connect to database"
