@@ -13,7 +13,7 @@ import datetime
 __author__ = 'enrico'
 
 
-def validate_albi(data: dict, fields: list, date_fields: list = None) -> bool:
+def validate_structure(data: dict, fields: list, date_fields: list = None) -> bool:
     for field in fields:
         if field not in data:
             raise ValueError(field + " is missing in JSON")
