@@ -69,3 +69,7 @@ def add_albi(db: Database, data: dict) -> dict:
         return {"result": "ok", "message": "albo inserted"}
     else:
         return {"result": "ko", "message": "serie does not exist"}
+
+
+def add_collana(db: Database, data: dict) -> dict:
+    return {"result": "ok", "message": "collana inserted"}
