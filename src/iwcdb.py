@@ -13,7 +13,7 @@ import json
 import bottle
 
 import utils
-from routes import gets, puts
+from routes import gets, posts
 
 __author__ = 'enrico'
 
@@ -39,8 +39,8 @@ if __name__ == "__main__":
         app.route("/", method="GET", callback=g.index)
         app.route("/serie", method="GET", callback=g.serie)
 
-        app.route("/serie/add", method="POST", callback=puts.serie)
-        app.route("/albi/add", method="POST", callback=puts.albi)
+        app.route("/serie/add", method="POST", callback=posts.serie)
+        app.route("/albi/add", method="POST", callback=posts.albi)
 
         bottle.run(app=app,
                    host=cfg["service"]["listen"],
