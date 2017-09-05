@@ -33,8 +33,7 @@ class Gets:
         req = bottle.request.query.name or None
 
         if not req:
-            bottle.response.status = 500
-            return json.dumps({"result": "ko", "message": "no serie passed"})
+            raise bottle.HTTPError(status=500, body="no serie passed")
 
         try:
             res = database.is_serie_exist(self.db, req)
@@ -43,9 +42,8 @@ class Gets:
                 # TODO: return serie JSON
                 pass
             else:
-                bottle.response.status = 500
-                return json.dumps({"result": "ko", "message": "Serie {} not exist".format(req)})
+                raise bottle.HTTPError(status=500, body="Serie {} not exist".format(req))
         except _mysql_exceptions.OperationalError as e:
             bottle.response.status = 500
-            return json.dumps({"result": "ko", "message": "Cannot connect to database"})
+            raise bottle.HTTPError(status=500, body="Cannot connect to database")
 
