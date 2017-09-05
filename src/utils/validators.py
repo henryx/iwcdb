@@ -13,22 +13,16 @@ import datetime
 __author__ = 'enrico'
 
 
-def validate_albi(data: dict) -> bool:
-    # TODO: check valuta
-    fields = [
-        "serie",
-        "numero",
-        "uscita",
-        "prezzo"
-    ]
-
+def validate_albi(data: dict, fields: list, date_fields: list = None) -> bool:
     for field in fields:
         if field not in data:
             raise ValueError(field + " is missing in JSON")
 
-    try:
-        datetime.datetime.strptime(data["uscita"], '%Y-%m-%d')
-    except:
-        raise ValueError("Malformed date in JSON uscita field")
+    if date_fields:
+        for field in date_fields:
+            try:
+                datetime.datetime.strptime(data[field], '%Y-%m-%d')
+            except:
+                raise ValueError("Malformed date in JSON {} field".format(field))
 
     return True

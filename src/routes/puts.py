@@ -16,10 +16,16 @@ import utils
 
 def albi():
     bottle.response.headers['Content-type'] = 'application/json'
+    fields = [
+        "serie",
+        "numero",
+        "uscita",
+        "prezzo"
+    ]
 
     entity = utils.read_json()
     try:
-        if utils.validators.validate_albi(entity):
+        if utils.validators.validate_albi(entity, fields, ["uscita",]):
             result = utils.database.add_albi(utils.load_cfg(), entity)
             if result["result"] == "ok":
                 return json.dumps(result)
