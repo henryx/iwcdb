@@ -39,8 +39,8 @@ if __name__ == "__main__":
         app.route("/", method="GET", callback=g.index)
         app.route("/serie", method="GET", callback=g.serie)
 
-        app.route("/serie/add", method="PUT", callback=puts.serie)
-        app.route("/albi/add", method="PUT", callback=puts.albi)
+        app.route("/serie/add", method="POST", callback=puts.serie)
+        app.route("/albi/add", method="POST", callback=puts.albi)
 
         bottle.run(app=app,
                    host=cfg["service"]["listen"],
