@@ -8,17 +8,18 @@ Description   A web application for reporting information about comics
 License       GPL version 2 (see LICENSE for details)
 """
 import configparser
+import datetime
 import io
 import json
-
-import bottle
 import sys
 
-from . import database, validators
+import bottle
+
+from . import database
 
 __author__ = 'enrico'
 
-__all__ = ["database", "validators"]
+__all__ = ["database", ]
 
 
 def read_json() -> dict:
@@ -43,3 +44,18 @@ def load_cfg():
         sys.exit(1)
 
     return cfg
+
+
+def validate_structure(data: dict, fields: list, date_fields: list = None) -> bool:
+    for field in fields:
+        if field not in data:
+            raise ValueError(field + " is missing in JSON")
+
+    if date_fields:
+        for field in date_fields:
+            try:
+                datetime.datetime.strptime(data[field], '%Y-%m-%d')
+            except:
+                raise ValueError("Malformed date in JSON {} field".format(field))
+
+    return True

@@ -25,7 +25,7 @@ def albi():
 
     entity = utils.read_json()
     try:
-        if utils.validators.validate_structure(entity, fields, ["uscita", ]):
+        if utils.validate_structure(entity, fields, ["uscita", ]):
             result = utils.database.add_albi(utils.load_cfg(), entity)
             if result["result"] == "ok":
                 return json.dumps(result)
