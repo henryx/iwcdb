@@ -28,22 +28,20 @@ class Gets:
     def index(self):
         return bottle.template("index", title="the Italian Web Comics Database")
 
-    def serie(self):
+    def serie(self, name=None):
         bottle.response.headers['Content-type'] = 'application/json'
-        req = bottle.request.query.name or None
 
-        if not req:
+        if not name:
             raise bottle.HTTPError(status=500, body="no serie passed")
 
         try:
-            res = database.is_serie_exist(self.db, req)
+            res = database.is_serie_exist(self.db, name)
 
             if res:
                 # TODO: return serie JSON
                 pass
             else:
-                raise bottle.HTTPError(status=500, body="Serie {} not exist".format(req))
+                raise bottle.HTTPError(status=500, body="Serie '{}' not exist".format(name))
         except _mysql_exceptions.OperationalError as e:
             bottle.response.status = 500
             raise bottle.HTTPError(status=500, body="Cannot connect to database")
-
