@@ -7,23 +7,17 @@ Description   A web application for reporting information about comics
               published in Italy
 License       GPL version 2 (see GPL.txt for details)
 """
-import json
 
 import _mysql_exceptions
 import bottle
 
+from routes import Routes
 from utils import database
 
 
-class Gets:
-    _db = None
-
-    @property
-    def db(self):
-        return self._db
-
+class Gets(Routes):
     def __init__(self, db: database.Database):
-        self._db = db
+        super(Gets, self).__init__(db)
 
     def index(self):
         return bottle.template("index", title="the Italian Web Comics Database")
