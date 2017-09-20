@@ -44,3 +44,18 @@ class Posts(Routes):
 
         entity = utils.read_json()
         # TODO: insert serie into database
+
+    def collana(self):
+        bottle.response.headers['Content-type'] = 'application/json'
+        fields = [
+            "nome",
+            "editore"
+        ]
+
+        entity = utils.read_json()
+        try:
+            if utils.validate_structure(entity, fields):
+                # TODO: add collana
+                pass
+        except Exception as e:
+            raise bottle.HTTPError(status=500, body=str(e))
