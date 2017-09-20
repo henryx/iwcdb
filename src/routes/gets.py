@@ -39,3 +39,7 @@ class Gets(Routes):
         except _mysql_exceptions.OperationalError as e:
             bottle.response.status = 500
             raise bottle.HTTPError(status=500, body="Cannot connect to database")
+
+    def collana(self, name=None):
+        bottle.response.headers['Content-type'] = 'application/json'
+        #TODO: return collana JSON
