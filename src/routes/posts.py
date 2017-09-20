@@ -12,31 +12,35 @@ import json
 import bottle
 
 import utils
+from routes import Routes
 
 
-def albi():
-    bottle.response.headers['Content-type'] = 'application/json'
-    fields = [
-        "serie",
-        "numero",
-        "uscita",
-        "prezzo"
-    ]
+class Posts(Routes):
+    def __init__(self, db: utils.database.Database):
+        super(Posts, self).__init__(db)
 
-    entity = utils.read_json()
-    try:
-        if utils.validate_structure(entity, fields, ["uscita", ]):
-            result = utils.database.add_albi(utils.load_cfg(), entity)
-            if result["result"] == "ok":
-                return json.dumps(result)
-            else:
-                raise Exception(result["message"])
-    except Exception as e:
-        raise bottle.HTTPError(status=500, body=str(e))
+    def albi(self):
+        bottle.response.headers['Content-type'] = 'application/json'
+        fields = [
+            "serie",
+            "numero",
+            "uscita",
+            "prezzo"
+        ]
 
+        entity = utils.read_json()
+        try:
+            if utils.validate_structure(entity, fields, ["uscita", ]):
+                result = utils.database.add_albi(self.db, entity)
+                if result["result"] == "ok":
+                    return json.dumps(result)
+                else:
+                    raise Exception(result["message"])
+        except Exception as e:
+            raise bottle.HTTPError(status=500, body=str(e))
 
-def serie():
-    bottle.response.headers['Content-type'] = 'application/json'
+    def serie(self):
+        bottle.response.headers['Content-type'] = 'application/json'
 
-    entity = utils.read_json()
-    # TODO: insert serie into database
+        entity = utils.read_json()
+        # TODO: insert serie into database

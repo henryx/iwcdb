@@ -35,13 +35,14 @@ if __name__ == "__main__":
 
     with utils.database.Database(cfg) as db:
         g = gets.Gets(db)
+        p = posts.Posts(db)
 
         app.route("/", method="GET", callback=g.index)
         app.route("/serie", method="GET", callback=g.serie)
         app.route("/serie/<name>", method="GET", callback=g.serie)
 
-        app.route("/serie", method="POST", callback=posts.serie)
-        app.route("/albi", method="POST", callback=posts.albi)
+        app.route("/serie", method="POST", callback=p.serie)
+        app.route("/albi", method="POST", callback=p.albi)
 
         bottle.run(app=app,
                    host=cfg["service"]["listen"],
