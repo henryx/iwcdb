@@ -11,6 +11,7 @@ import configparser
 import datetime
 import io
 import json
+import os
 import sys
 
 import bottle
@@ -38,7 +39,11 @@ def read_json() -> dict:
 def load_cfg():
     cfg = configparser.ConfigParser()
     try:
-        cfg.read(sys.argv[1])
+        if os.path.exists(sys.argv[1]):
+            cfg.read(sys.argv[1])
+        else:
+            print("File {} not exitst".format(sys.argv[1]))
+            raise FileNotFoundError
     except:
         print("Usage: " + sys.argv[0] + " <configfile>")
         sys.exit(1)
