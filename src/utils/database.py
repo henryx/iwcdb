@@ -83,9 +83,14 @@ def get_editore(db: Database, name: str = None) -> dict:
     }
 
     query = "SELECT nome_editore, sede_editore FROM lk_editore"
+    if name:
+        query = query + "WHERE nome_editore = %s"
 
     with closing(db.connection.cursor()) as cursor:
-        cursor.execute(query)
+        if name:
+            cursor.execute(query)
+        else:
+            cursor.execute(query, (name,))
 
         for row in cursor:
             data = {
