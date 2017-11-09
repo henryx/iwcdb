@@ -42,6 +42,7 @@ if __name__ == "__main__":
         app.route("/serie/<name>", method="GET", callback=g.serie)
         app.route("/collana", method="GET", callback=g.collana)
         app.route("/collana/<name>", method="GET", callback=g.collana)
+        app.route("/editore", method="GET", callback=g.editore)
 
         app.route("/serie", method="POST", callback=p.serie)
         app.route("/albi", method="POST", callback=p.albi)
