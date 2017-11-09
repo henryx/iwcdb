@@ -72,4 +72,5 @@ def add_albi(db: Database, data: dict) -> dict:
 
 
 def add_collana(db: Database, data: dict) -> dict:
+    # TODO: add collana
     return {"result": "ok", "message": "collana inserted"}
