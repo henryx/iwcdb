@@ -81,21 +81,24 @@ def get_editore(db: Database, name: str = None, limit: int=None, offset: int=Non
         "data": [],
         "result": "ko"
     }
+    filters = []
 
     query = "SELECT nome_editore, sede_editore FROM lk_editore"
     if name:
         query = query + "WHERE nome_editore = %s"
-
+        filters.append(name)
     if limit:
         query = query + " LIMIT %s"
+        filters.append(limit)
         if offset:
             query = query + ",%s"
+            filters.append(offset)
 
     with closing(db.connection.cursor()) as cursor:
-        if name:
+        if len(filters) == 0:
             cursor.execute(query)
         else:
-            cursor.execute(query, (name,))
+            cursor.execute(query, filters)
 
         for row in cursor:
             data = {
