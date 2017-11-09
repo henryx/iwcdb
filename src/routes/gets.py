@@ -7,6 +7,7 @@ Description   A web application for reporting information about comics
               published in Italy
 License       GPL version 2 (see GPL.txt for details)
 """
+import json
 
 import _mysql_exceptions
 import bottle
@@ -48,7 +49,8 @@ class Gets(Routes):
         bottle.response.headers['Content-type'] = 'application/json'
 
         try:
-            pass
+            res = database.get_editore(self.db)
+            return json.dumps(res)
         except _mysql_exceptions.OperationalError as e:
             bottle.response.status = 500
             raise bottle.HTTPError(status=500, body="Cannot connect to database")
