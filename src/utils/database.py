@@ -76,7 +76,7 @@ def add_collana(db: Database, data: dict) -> dict:
     return {"result": "ok", "message": "collana inserted"}
 
 
-def get_editore(db: Database, name: str = None) -> dict:
+def get_editore(db: Database, name: str = None, limit: int=None, offset: int=None) -> dict:
     res = {
         "data": [],
         "result": "ko"
@@ -85,6 +85,11 @@ def get_editore(db: Database, name: str = None) -> dict:
     query = "SELECT nome_editore, sede_editore FROM lk_editore"
     if name:
         query = query + "WHERE nome_editore = %s"
+
+    if limit:
+        query = query + " LIMIT %s"
+        if offset:
+            query = query + ",%s"
 
     with closing(db.connection.cursor()) as cursor:
         if name:
