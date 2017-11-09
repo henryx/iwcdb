@@ -48,8 +48,12 @@ class Gets(Routes):
     def editore(self):
         bottle.response.headers['Content-type'] = 'application/json'
 
+        limits = bottle.request.query["limit"]
+        limit = int(limits.split(",")[0]) if "," in limits else int(limits)
+        offset = int(limits.split(",")[1]) if "," in limits else None
+
         try:
-            res = database.get_editore(self.db)
+            res = database.get_editore(self.db, limit=limit, offset=offset)
             return json.dumps(res)
         except _mysql_exceptions.OperationalError as e:
             bottle.response.status = 500
