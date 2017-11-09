@@ -79,7 +79,8 @@ def add_collana(db: Database, data: dict) -> dict:
 def get_editore(db: Database, name: str = None, limit: int=None, offset: int=None) -> dict:
     res = {
         "data": [],
-        "result": "ko"
+        "result": "ko",
+        "size": 0
     }
     filters = []
 
@@ -107,6 +108,9 @@ def get_editore(db: Database, name: str = None, limit: int=None, offset: int=Non
             }
 
             res["data"].append(data)
+            res["size"] += 1
+
+        if res["size"] > 0:
             res["result"] = "ok"
 
     return res
