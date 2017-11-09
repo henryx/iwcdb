@@ -45,7 +45,7 @@ class Gets(Routes):
         bottle.response.headers['Content-type'] = 'application/json'
         # TODO: return collana JSON
 
-    def editore(self, name=None):
+    def editore(self):
         bottle.response.headers['Content-type'] = 'application/json'
 
         try:
