@@ -46,3 +46,9 @@ class Gets(Routes):
 
     def editore(self, name=None):
         bottle.response.headers['Content-type'] = 'application/json'
+
+        try:
+            pass
+        except _mysql_exceptions.OperationalError as e:
+            bottle.response.status = 500
+            raise bottle.HTTPError(status=500, body="Cannot connect to database")
