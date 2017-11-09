@@ -74,3 +74,26 @@ def add_albi(db: Database, data: dict) -> dict:
 def add_collana(db: Database, data: dict) -> dict:
     # TODO: add collana
     return {"result": "ok", "message": "collana inserted"}
+
+
+def get_editore(db: Database, name: str = None) -> dict:
+    res = {
+        "data": [],
+        "result": "ko"
+    }
+
+    query = "SELECT nome_editore, sede_editore FROM lk_editore"
+
+    with closing(db.connection.cursor()) as cursor:
+        cursor.execute(query)
+
+        for row in cursor:
+            data = {
+                "nome": row[0],
+                "sede": row[1]
+            }
+
+            res["data"].append(data)
+            res["result"] = "ok"
+
+    return res
