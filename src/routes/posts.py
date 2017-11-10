@@ -55,7 +55,8 @@ class Posts(Routes):
         entity = utils.read_json()
         try:
             if utils.validate_structure(entity, fields):
-                # TODO: add collana
-                pass
+                if not utils.database.is_collana_exists(self._db, entity["nome"], entity["editore"]):
+                    # TODO: add collana
+                    pass
         except Exception as e:
             raise bottle.HTTPError(status=500, body=str(e))
