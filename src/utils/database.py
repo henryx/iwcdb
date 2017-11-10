@@ -55,6 +55,20 @@ def is_serie_exist(db: Database, nome_serie: str) -> bool:
             return False
 
 
+def is_collana_exists(db: Database, nome_collana: str, nome_editore: str):
+    query = "SELECT Count(*) FROM lk_collana WHERE nome_collana = %s AND nome_editore = %s"
+
+    with closing(db.connection.cursor()) as cursor:
+        cursor.execute(query, (nome_collana, nome_editore))
+
+        value = cursor.fetchone()[0]
+
+        if value > 0:
+            return True
+        else:
+            return False
+
+
 def add_albi(db: Database, data: dict) -> dict:
     # TODO: add valuta
 
@@ -76,7 +90,7 @@ def add_collana(db: Database, data: dict) -> dict:
     return {"result": "ok", "message": "collana inserted"}
 
 
-def get_editore(db: Database, name: str = None, limit: int=None, offset: int=None) -> dict:
+def get_editore(db: Database, name: str = None, limit: int = None, offset: int = None) -> dict:
     res = {
         "data": [],
         "result": "ko",
